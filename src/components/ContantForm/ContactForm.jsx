@@ -5,23 +5,27 @@ import { nanoid } from '@reduxjs/toolkit';
 import { addContact } from 'Redux/contactsSlice';
 
 export const ContactForm = () => {
-   const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const contacts = useSelector(getContacts);
+  
   const handleSubmit = e => {
     e.preventDefault();
 
     const name = e.target.elements.name.value;
+    const number = e.target.elements.number.value;
+
     if (contacts.find(el => el.name === name)) {
       alert(name + ' already exists in the phone book');
       e.target.reset();
       return;
     }
-    const number = e.target.elements.number.value;
+
     const newContact = {
       id: nanoid(),
       name,
       number,
     };
+    
     dispatch(addContact(newContact));
     e.target.reset();
   };
